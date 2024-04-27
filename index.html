@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BMR Calculator</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-color: #afafaf;
+    }
+    .container {
+        text-align: center;
+        background-color: #999999;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    h1 {
+        color: #292929;
+    }
+
+    h3 {
+        color: #292929;
+    }
+
+    label {
+        font-weight: italic;
+        color: #292929;
+    }
+    input[type="number"] {
+        padding: 8px;
+        margin: 5px;
+        border: 1px solid #979797;
+        border-radius: 5px;
+    }
+    select {
+        padding: 8px;
+        margin: 5px;
+        border: 1px solid #3a3a3a;
+        border-radius: 5px;
+    }
+    button {
+        padding: 10px 20px;
+        margin-top: 10px;
+        background-color: #183546;
+        color: #c0c0c0;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+    button:hover {
+        background-color: #666666;
+    }
+    #result {
+        margin-top: 20px;
+        font-weight: bold;
+    }
+</style>
+</head>
+<body>
+<div class="container">
+    <h1>BMR Calculator</h1>
+    <h3>Made by Erik</h3>
+    <label for="weight">Weight (kg): </label>
+    <input type="number" id="weight"><br><br>
+    <label for="height">Height: </label>
+    <input type="number" id="feet" placeholder="Feet"> <input type="number" id="inches" placeholder="Inches"><br><br>
+    <label for="age">Age: </label>
+    <input type="number" id="age"><br><br>
+    <label for="gender">Gender: </label>
+    <select id="gender">
+        <option value="male">Male</option>
+        <option value="female">Female</option>
+    </select><br><br>
+    <label for="activity">Activity Level: </label>
+    <select id="activity">
+        <option value="sedentary">Idle</option>
+        <option value="lightly-active">Lightly active</option>
+        <option value="moderately-active">Moderately active</option>
+        <option value="very-active">Very active</option>
+        <option value="super-active">Super active</option>
+    </select><br><br>
+    <button onclick="calculateBMR()">Calculate BMR</button><br><br>
+    <div id="result"></div>
+</div>
+
+<script>
+function calculateBMR() {
+    var weight = parseFloat(document.getElementById("weight").value);
+    var feet = parseInt(document.getElementById("feet").value);
+    var inches = parseInt(document.getElementById("inches").value);
+    var height = feet * 0.3048 + inches * 0.0254;
+    var age = parseInt(document.getElementById("age").value);
+    var gender = document.getElementById("gender").value;
+    var activityLevel = document.getElementById("activity").value;
+
+    var bmr;
+
+    if (gender === "male") {
+        bmr = 10 * weight + 6.25 * height - 5 * age + 5;
+    } else {
+        bmr = 10 * weight + 6.25 * height - 5 * age - 161;
+    }
+
+    var activityFactors = {
+        "sedentary": 1.2,
+        "lightly-active": 1.375,
+        "moderately-active": 1.55,
+        "very-active": 1.725,
+        "super-active": 1.9
+    };
+
+    var calorieRequirement = bmr * activityFactors[activityLevel];
+
+    document.getElementById("result").innerHTML = "Your BMR is: " + bmr.toFixed(2) + " calories per day.<br>" +
+        "Your daily calorie requirement is approximately: " + calorieRequirement.toFixed(2) + " calories per day.";
+}
+</script>
+</body>
+</html>
